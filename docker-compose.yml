@@ -1,11 +1,11 @@
 version: '3'
 services:
-  cms_frontend:
+  users_frontend:
     build:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8100:8100"
+      - "8101:8101"
     volumes:
       - ./app:/usr/src/app
     working_dir: /usr/src/app

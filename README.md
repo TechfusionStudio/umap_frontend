@@ -1,4 +1,4 @@
-# umap_cms_frontend
+# umap_frontend
 
 ## Initial deploy
 You Need to Set at Amplify Console.

@@ -1,5 +1,4 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
 import {
   Router,
   ActivatedRoute,
@@ -28,14 +27,12 @@ export class MenuPage implements OnInit {
   selectedFile: File | null = null;
 
   constructor(
-    private authService: AuthService,
     private router: Router,
     private httpService: HttpService,
     private uploadService: UploadService,
   ) {}
 
   ngOnInit() {
-    this.authService.checkSession();
     this.menu = this.activatedRoute.snapshot.paramMap.get('id') as string;
   }
 

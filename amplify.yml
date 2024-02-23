@@ -3,7 +3,7 @@ frontend:
   phases:
     preBuild:
       commands:
-        - cd app/umap_cms
+        - cd app/umap_users
         - nvm install 20.11.1
         - npm install -g npm@9.8.1 @ionic/cli@7.1.1 capacitor@0.5.5
         - npm install
@@ -11,8 +11,6 @@ frontend:
           echo "export const environment = {
             production: true,
             cognito: {
-              userPoolId: '${USER_POOL_ID}',
-              clientId: '${CLIENT_ID}',
               region: 'ap-northeast-1'
             },
             apiEndpoint: '${API_ENDPOINT}',
@@ -21,8 +19,6 @@ frontend:
           echo "export const environment = {
             production: false,
             cognito: {
-              userPoolId: '${USER_POOL_ID}',
-              clientId: '${CLIENT_ID}',
               region: 'ap-northeast-1'
             },
             apiEndpoint: '${API_ENDPOINT}',
@@ -34,7 +30,7 @@ frontend:
         - 'echo "Building as: ionic build $SUFFIX"'
         - ionic build $SUFFIX
   artifacts:
-    baseDirectory: app/umap_cms/www
+    baseDirectory: app/umap_users/www
     files:
       - '**/*'
     cache:

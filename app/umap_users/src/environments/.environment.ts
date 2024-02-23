@@ -5,8 +5,6 @@
 export const environment = {
   production: false,
   cognito: {
-    userPoolId: 'YOUR_USER_POOL_ID',
-    clientId: 'YOUR_CLIENT_ID',
     region: 'YOUR_REGION'
   },
   apiEndpoint: 'API_ENDPOINT',
