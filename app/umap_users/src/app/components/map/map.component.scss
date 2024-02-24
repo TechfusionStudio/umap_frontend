@@ -2,4 +2,49 @@
   height: 500px;
   width: 350px;
   margin: 10px auto;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  // border: 1px solid #ccc;
+  // border-radius: 8px;
+  // position: relative; // Useful for absolutely positioned children
+}
+
+map-info-window {
+  .info-content {
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    font-size: 14px;
+    color: #333;
+
+    ion-button {
+      display: block;
+      margin-top: 10px;
+      background-color: #007bff;
+      color: #ffffff;
+      &:hover {
+        background-color: darken(#007bff, 5%);
+      }
+    }
+  }
+}
+
+// @media (max-width: 768px) {
+//   .map-container {
+//     width: 100%;
+//     height: 400px; // Adjust based on the available vertical space on smaller screens
+//   }
+// }
+
+.loading-state, .error-message {
+  text-align: center;
+  padding: 20px;
+  color: #666;
+}
+
+.abstract-data-container {
+  div {
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
 }
