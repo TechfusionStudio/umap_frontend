@@ -1,13 +1,29 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>item</ion-title>
+    <ion-title>公園の詳細情報</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">item</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <div class="park-details">
+    <ng-container *ngFor="let key of nearItemsDataKeys">
+      <p><strong>{{ key }}:</strong> {{ nearItemsDataValues[key] }}</p>
+      <!-- <br> -->
+    </ng-container>
+  </div>
+
+
+  <!-- 質問一覧を**表示** -->
+  <!-- <ion-list>
+    <ion-item *ngFor="let question of questions">
+      <ion-label>
+        <h2>{{ question.title }}</h2>
+        <p>{{ question.content }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list> -->
+  <!-- 質問を**発行** -->
+  <ion-button expand="block" routerLink="/question/edit/{{nearItemsDataValues['item_id']}}">質問を投稿する</ion-button>
+  
+
 </ion-content>

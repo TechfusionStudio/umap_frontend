@@ -26,7 +26,10 @@
           </ng-container>
         </ng-container>
         <a href="https://www.google.com/maps/search/?api=1&query={{nearItem.lat}},{{nearItem.lng}}" target="_blank">Google Mapsで見る</a>
-        <ion-button class="detail-button" expand="full">詳細を見る</ion-button>
+        <ion-button class="detail-button" expand="full" (click)="clickDetail(
+          nearItemsDataValues[i],
+          nearItemsDataKeys
+        )">詳細を見る</ion-button>
       </map-info-window>
     </ng-container>
   </google-map>

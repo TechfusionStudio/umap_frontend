@@ -3,6 +3,7 @@ import { Storage } from '@ionic/storage-angular';
 import { GoogleMap, MapInfoWindow, MapMarker } from '@angular/google-maps';
 import { environment } from 'src/environments/environment';
 import { HttpService } from 'src/app/services/http.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-map',
@@ -53,6 +54,7 @@ export class MapComponent implements OnInit {
   constructor(
     private storage: Storage,
     private httpService: HttpService,
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -174,5 +176,14 @@ export class MapComponent implements OnInit {
         console.log(error);
       }
     });
+  }
+
+  clickDetail = async (
+    nearItemsDataValues: { [key: string]: any },
+    nearItemsDataKeys: string[],
+  ) => {
+    await this.storage.set('nearItemsDataValues', JSON.stringify(nearItemsDataValues));
+    await this.storage.set('nearItemsDataKeys', JSON.stringify(nearItemsDataKeys));
+    this.router.navigate([`/item/${nearItemsDataValues["item_id"]}`]);
   }
 }
