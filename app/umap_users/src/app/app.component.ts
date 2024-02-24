@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -24,5 +25,15 @@ export class AppComponent {
         this.showMenu = !event.url.includes('/login') && !event.url.includes('/signup');
       }
     });
+  }
+
+  ngOnInit() {
+    this.loadGoogleMapsApi();
+  }
+
+  loadGoogleMapsApi = () => {
+    const script = document.createElement('script');
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${environment.googleMapApiKey}`;
+    document.head.appendChild(script);
   }
 }

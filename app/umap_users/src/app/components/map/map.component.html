@@ -1,0 +1,16 @@
+<div class="map-container" *ngIf="isDisplay">
+  <google-map 
+    height="640px"
+    width="400px"
+    [center]="center"
+    [zoom]="zoom"
+    [options]="options"
+  >
+    <map-marker
+      *ngIf="center"
+      [position]="center"
+      [options]="currentPositionMarkerOption"
+    >
+    </map-marker>
+  </google-map>
+</div>

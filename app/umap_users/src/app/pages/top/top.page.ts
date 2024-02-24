@@ -27,8 +27,31 @@ export class TopPage implements OnInit {
     this.init();
   }
 
+  fixAgeGroupLabel = (
+    ageGroup: { label: string; value: string } | undefined
+  ): { label: string; value: string } => {
+    if (typeof ageGroup === 'undefined') {
+      return this.ageGroups[0];
+    }
+    else {
+      return ageGroup;
+    }
+  }
+
   async init() {
     await this.storage.create();
+    console.log(this.storage.get('userNickname'));
+    this.storage.get('ageGroup').then((val) => {
+      if (val) {
+        const ageGroup: { label: string; value: string } | undefined = this.ageGroups.find((ageGroup) => ageGroup.value === val);
+        this.selectedAgeGroup = this.fixAgeGroupLabel(ageGroup);
+      }
+    });
+    this.storage.get('userNickname').then((val) => {
+      if (val) {
+        this.userNickname = val;
+      }
+    });
   }
 
   selectAgeGroup(ageGroup: { label: string; value: string }) {

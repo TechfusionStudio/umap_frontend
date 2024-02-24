@@ -7,13 +7,17 @@ import { IonicModule } from '@ionic/angular';
 import { HomePageRoutingModule } from './home-routing.module';
 
 import { HomePage } from './home.page';
+// import { GoogleMapsModule } from '@angular/google-maps';
+import { ComponentsModule } from 'src/app/components/components.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    HomePageRoutingModule
+    HomePageRoutingModule,
+    // GoogleMapsModule,
+    ComponentsModule,
   ],
   declarations: [HomePage]
 })
