@@ -2,7 +2,7 @@ FROM node:20.11.1
 
 WORKDIR /usr/src/app
 
-RUN npm install -g npm@9.8.1
+RUN npm install -g npm@10.4.0
 
 # Install Ionic and Capacitor
 RUN npm i -g @ionic/cli@7.1.1 \

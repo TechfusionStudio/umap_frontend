@@ -1,0 +1,25 @@
+<div class="all-center">
+  <div class="img-logo">
+    <img src="assets/logo.svg">
+  </div>
+
+  <div id="script-logo" class="script-logo"></div>
+  
+  <div class="registration-box">
+    <h3>ニックネーム</h3>
+    <div class="inputs">
+      <label>
+        <input type="text" class="textbox-003" placeholder="ニックネーム" [(ngModel)]="userNickname"/>
+      </label>
+
+      <h3>子供の年代</h3>
+      <div class="age-group-buttons">
+        <ion-button *ngFor="let ageGroup of ageGroups" (click)="selectAgeGroup(ageGroup)" [color]="selectedAgeGroup === ageGroup ? 'primary' : 'light'">
+          {{ ageGroup.label }}
+        </ion-button>
+      </div>
+
+      <ion-button color="dark" (click)="registerUser()">はじめる</ion-button>
+    </div>
+  </div>
+</div>

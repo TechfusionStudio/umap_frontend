@@ -4,7 +4,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'menu/Inbox',
+    redirectTo: 'top',
     // redirectTo: 'login',
     pathMatch: 'full'
   },
@@ -19,6 +19,26 @@ const routes: Routes = [
   {
     path: 'signup',
     loadChildren: () => import('./pages/signup/signup.module').then( m => m.SignupPageModule)
+  },
+  {
+    path: 'top',
+    loadChildren: () => import('./pages/top/top.module').then( m => m.TopPageModule)
+  },
+  {
+    path: 'home',
+    loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule)
+  },
+  {
+    path: 'item/:item_id',
+    loadChildren: () => import('./pages/item/item.module').then( m => m.ItemPageModule)
+  },
+  {
+    path: 'question/:question_id',
+    loadChildren: () => import('./pages/question/question.module').then( m => m.QuestionPageModule)
+  },
+  {
+    path: 'question/edit/:item_id',
+    loadChildren: () => import('./pages/question-edit/question-edit.module').then( m => m.QuestionEditPageModule)
   }
 ];
 
