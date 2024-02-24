@@ -19,7 +19,7 @@ export class MapComponent implements OnInit {
     lng: 139.663738,
   };
   markerPositions: google.maps.LatLngLiteral[] = [];
-  zoom = 4;
+  zoom = 10;
   display: google.maps.LatLngLiteral | undefined;
   isDisplay: boolean = true;
   options: google.maps.MapOptions = {
