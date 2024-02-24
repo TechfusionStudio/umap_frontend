@@ -5,6 +5,7 @@
     [center]="center"
     [zoom]="zoom"
     [options]="options"
+    (mapClick)="addMarker($event)"
   >
     <map-marker
       *ngIf="center"
@@ -12,26 +13,38 @@
       [options]="currentPositionMarkerOption"
     >
     </map-marker>
-    <ng-container *ngFor="let nearItem of nearItems; let i = index;">
+    <div *ngFor="let nearItem of nearItems; index as i">
       <map-marker
         #marker="mapMarker"
-        [position]="nearItem"
+        [position]="nearItem['position']"
         [options]="nearItemPositionsMarkerOption"
-        (mapClick)="openInfoWindow(marker)"
+        (mapClick)="openInfoWindow(marker, i)"
       ></map-marker>
       <map-info-window class="custom-info-window">
-        <ng-container *ngFor="let key of nearItemsDataKeys">
-          <ng-container *ngIf="nearItemsIsAbstractData[i][key]">
-            <div class="info-window-content">{{ key }}: {{ nearItemsDataValues[i][key] }}</div><br>
+        <!-- <ng-container *ngFor="let key of nearItemsDataKeys">
+          <ng-container *ngIf="nearItem['isAbstractData'][key]">
+            <div class="info-window-content">{{ key }}: {{ nearItem['dataValues'][key] }}</div><br>
           </ng-container>
         </ng-container>
-        <a href="https://www.google.com/maps/search/?api=1&query={{nearItem.lat}},{{nearItem.lng}}" target="_blank">Google Mapsで見る</a>
+        <a href="https://www.google.com/maps/search/?api=1&query={{nearItem['position'].lat}},{{nearItem['position'].lng}}" target="_blank">Google Mapsで見る</a>
         <ion-button class="detail-button" expand="full" (click)="clickDetail(
-          nearItemsDataValues[i],
+          nearItem['dataValues'],
+          nearItemsDataKeys
+        )">詳細を見る</ion-button> -->
+        <ng-container *ngFor="let key of currentItemDataKeys">
+          <ng-container *ngIf="currentItemsIsAbstractData[key]">
+            <div class="info-window-content">{{ key }}: {{ currentItemDataValues[key] }}</div><br>
+          </ng-container>
+        </ng-container>
+        <a href="https://www.google.com/maps/search/?api=1&query={{currentPosition?.lat}},{{currentPosition?.lng}}" target="_blank">Google Mapsで見る</a>
+        <ion-button class="detail-button" expand="full" (click)="clickDetail(
+          nearItem['dataValues'],
           nearItemsDataKeys
         )">詳細を見る</ion-button>
+        <!-- <div><strong>{{ currentInfoWindowContent.title }}</strong></div>
+        <div>{{ currentInfoWindowContent.description }}</div> -->
       </map-info-window>
-    </ng-container>
+    </div>
   </google-map>
 </div>
 

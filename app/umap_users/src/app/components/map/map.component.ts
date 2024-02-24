@@ -15,6 +15,7 @@ export class MapComponent implements OnInit {
 
   userNickname: string = '';
   center: google.maps.LatLngLiteral = {lat: 24, lng: 12};
+  markerPositions: google.maps.LatLngLiteral[] = [];
   zoom = 4;
   display: google.maps.LatLngLiteral | undefined;
   isDisplay: boolean = true;
@@ -30,7 +31,7 @@ export class MapComponent implements OnInit {
     opacity: 0.6,
   };
 
-  nearItems: google.maps.LatLngLiteral[] = [];
+  nearItems: {[key: string]: google.maps.LatLngLiteral | any}[] = [];
   nearItemsDataValues: any[] = [];
   nearItemsDataKeys: string[] = [];
   nearItemsIsAbstractData: any[] = [];
@@ -38,6 +39,10 @@ export class MapComponent implements OnInit {
     animation: google.maps.Animation.DROP,
     opacity: 0.8,
   };
+  currentItemDataValues: { [key: string]: any } = {};
+  currentItemDataKeys: string[] = [];
+  currentItemsIsAbstractData: { [key: string]: boolean } = {};
+  currentPosition: google.maps.LatLngLiteral | undefined;
 
   filters: { [key: string]: boolean } = {
     "spacious": false,
@@ -105,19 +110,29 @@ export class MapComponent implements OnInit {
         const items = data['items'];
         const organizationIsAbstractData = data['organization_is_abstract_data'];
         items.forEach((item: any) => {
-          this.nearItems.push({
-            lat: item.data_values["緯度"],
-            lng: item.data_values["経度"],
-          });
-          this.nearItemsDataValues.push(item.data_values);
           if (item.is_abstract_data === null) {
-            this.nearItemsIsAbstractData.push(organizationIsAbstractData);
+            this.nearItems.push({
+              "position": {
+                lat: item.data_values["緯度"],
+                lng: item.data_values["経度"],
+              },
+              "dataValues": item.data_values,
+              "isAbstractData": organizationIsAbstractData,
+            });
           } else {
-            this.nearItemsIsAbstractData.push(item.is_abstract_data);
+            this.nearItems.push({
+              "position": {
+                lat: item.data_values["緯度"],
+                lng: item.data_values["経度"],
+              },
+              "dataValues": item.data_values,
+              "isAbstractData": item.is_abstract_data,
+            });
           }
         });
-        this.nearItemsDataKeys = Object.keys(this.nearItemsDataValues[0]);
+        this.nearItemsDataKeys = Object.keys(this.nearItems[0]["dataValues"]);
         this.zoom = 16;
+        console.log(this.nearItems, this.nearItemsDataKeys);
       },
       error: (error) => {
         console.log(error);
@@ -125,7 +140,17 @@ export class MapComponent implements OnInit {
     });
   }
 
-  openInfoWindow(marker: MapMarker) {
+  addMarker = (event: google.maps.MapMouseEvent) => {
+    if (event.latLng) {
+      this.markerPositions.push(event.latLng.toJSON());
+    }
+  }
+
+  openInfoWindow(marker: MapMarker, index: number) {
+    this.currentItemDataValues = this.nearItems[index]["dataValues"];
+    this.currentItemDataKeys = Object.keys(this.nearItems[index]["dataValues"]);
+    this.currentItemsIsAbstractData = this.nearItems[index]["isAbstractData"];
+    this.currentPosition = this.nearItems[index]["position"];
     this.infoWindow?.open(marker);
   }
 
@@ -142,9 +167,7 @@ export class MapComponent implements OnInit {
 
   getFilteredItems = () => {
     this.nearItems = [];
-    this.nearItemsDataValues = [];
     this.nearItemsDataKeys = [];
-    this.nearItemsIsAbstractData = [];
 
     const spaciousInt = this.filters["spacious"] ? 1 : 0;
     const facilityInt = this.filters["facility"] ? 1 : 0;
@@ -158,19 +181,30 @@ export class MapComponent implements OnInit {
         const items = data['items'];
         const organizationIsAbstractData = data['organization_is_abstract_data'];
         items.forEach((item: any) => {
-          this.nearItems.push({
-            lat: item.data_values["緯度"],
-            lng: item.data_values["経度"],
-          });
-          this.nearItemsDataValues.push(item.data_values);
           if (item.is_abstract_data === null) {
-            this.nearItemsIsAbstractData.push(organizationIsAbstractData);
+            this.nearItems.push({
+              "position": {
+                lat: item.data_values["緯度"],
+                lng: item.data_values["経度"],
+              },
+              "dataValues": item.data_values,
+              "isAbstractData": organizationIsAbstractData,
+            });
           } else {
-            this.nearItemsIsAbstractData.push(item.is_abstract_data);
+            this.nearItems.push({
+              "position": {
+                lat: item.data_values["緯度"],
+                lng: item.data_values["経度"],
+              },
+              "dataValues": item.data_values,
+              "isAbstractData": item.is_abstract_data,
+            });
           }
         });
-        this.nearItemsDataKeys = Object.keys(this.nearItemsDataValues[0]);
+        this.nearItemsDataKeys = Object.keys(this.nearItems[0]["dataValues"]);
+
         this.zoom = 14;
+        console.log(this.nearItems, this.nearItemsDataValues);
       },
       error: (error) => {
         console.log(error);
