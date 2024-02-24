@@ -48,3 +48,21 @@ map-info-window {
     font-weight: bold;
   }
 }
+
+.filter-options {
+  display: flex;
+  flex-direction: column; /* 縦方向に並べる */
+  // align-items: center; /* アイテムを中央揃えにする */
+  padding: 5px 12px;
+
+  ion-button {
+    margin: 5px 0; /* ボタン間の余白を調整 */
+    width: 100%;
+
+    &.active {
+      --background: #3880ff; /* Ionic のプライマリカラー */
+      --background-hover: darken(#3880ff, 5%);
+      --color: #fff;
+    }
+  }
+}

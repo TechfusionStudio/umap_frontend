@@ -31,3 +31,15 @@
     </ng-container>
   </google-map>
 </div>
+
+<div class="filter-options">
+  <ion-button color="primary" expand="block" [fill]="fill_filters['spacious']" size="small" (click)="toggleFilter('spacious')" [class.active]="filters['spacious']">
+    公園が広い
+  </ion-button>
+  <ion-button color="primary" expand="block" [fill]="fill_filters['facility']" size="small" (click)="toggleFilter('facility')" [class.active]="filters['facility']">
+    施設が充実している
+  </ion-button>
+  <ion-button color="primary" expand="block" [fill]="fill_filters['equipment']" size="small" (click)="toggleFilter('equipment')" [class.active]="filters['equipment']">
+    遊具が充実している
+  </ion-button>
+</div>

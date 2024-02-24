@@ -38,6 +38,18 @@ export class MapComponent implements OnInit {
     opacity: 0.8,
   };
 
+  filters: { [key: string]: boolean } = {
+    "spacious": false,
+    "facility": false,
+    "equipment": false,
+  };
+  fill_filters: { [key: string]: string } = {
+    "spacious": "outline",
+    "facility": "outline",
+    "equipment": "outline",
+  };
+
+
   constructor(
     private storage: Storage,
     private httpService: HttpService,
@@ -115,4 +127,52 @@ export class MapComponent implements OnInit {
     this.infoWindow?.open(marker);
   }
 
+  toggleFilter = (filter: string) => {
+    this.filters[filter] = !this.filters[filter];
+    if (this.filters[filter]) {
+      this.fill_filters[filter] = "solid";
+    } else {
+      this.fill_filters[filter] = "outline";
+    }
+    console.log(this.filters);
+    this.getFilteredItems();
+  }
+
+  getFilteredItems = () => {
+    this.nearItems = [];
+    this.nearItemsDataValues = [];
+    this.nearItemsDataKeys = [];
+    this.nearItemsIsAbstractData = [];
+
+    const spaciousInt = this.filters["spacious"] ? 1 : 0;
+    const facilityInt = this.filters["facility"] ? 1 : 0;
+    const equipmentInt = this.filters["equipment"] ? 1 : 0;
+    const path = `recommend_items?organization_id=nakano_test&latitude=${this.center.lat}&longitude=${this.center.lng}&spacious=${spaciousInt}&facility=${facilityInt}&equipment=${equipmentInt}`;
+    const url = environment.apiEndpoint + path;
+
+    this.httpService.httpGet(url).subscribe({
+      next: (data) => {
+        console.log(data);
+        const items = data['items'];
+        const organizationIsAbstractData = data['organization_is_abstract_data'];
+        items.forEach((item: any) => {
+          this.nearItems.push({
+            lat: item.data_values["緯度"],
+            lng: item.data_values["経度"],
+          });
+          this.nearItemsDataValues.push(item.data_values);
+          if (item.is_abstract_data === null) {
+            this.nearItemsIsAbstractData.push(organizationIsAbstractData);
+          } else {
+            this.nearItemsIsAbstractData.push(item.is_abstract_data);
+          }
+        });
+        this.nearItemsDataKeys = Object.keys(this.nearItemsDataValues[0]);
+        this.zoom = 14;
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    });
+  }
 }
