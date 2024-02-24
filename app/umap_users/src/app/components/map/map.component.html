@@ -38,8 +38,8 @@
         </ng-container>
         <a href="https://www.google.com/maps/search/?api=1&query={{currentPosition?.lat}},{{currentPosition?.lng}}" target="_blank">Google Mapsで見る</a>
         <ion-button class="detail-button" expand="full" (click)="clickDetail(
-          nearItem['dataValues'],
-          nearItemsDataKeys
+          currentItemDataValues,
+          currentItemDataKeys
         )">詳細を見る</ion-button>
         <!-- <div><strong>{{ currentInfoWindowContent.title }}</strong></div>
         <div>{{ currentInfoWindowContent.description }}</div> -->
