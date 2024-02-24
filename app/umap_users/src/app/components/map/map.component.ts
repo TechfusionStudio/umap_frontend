@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Storage } from '@ionic/storage-angular';
-import { GoogleMap } from '@angular/google-maps';
+import { GoogleMap, MapInfoWindow, MapMarker } from '@angular/google-maps';
 import { environment } from 'src/environments/environment';
 import { HttpService } from 'src/app/services/http.service';
 
@@ -10,6 +10,8 @@ import { HttpService } from 'src/app/services/http.service';
   styleUrls: ['./map.component.scss'],
 })
 export class MapComponent implements OnInit {
+  @ViewChild(MapInfoWindow) infoWindow: MapInfoWindow | undefined;
+
   userNickname: string = '';
   center: google.maps.LatLngLiteral = {lat: 24, lng: 12};
   zoom = 4;
@@ -26,6 +28,16 @@ export class MapComponent implements OnInit {
     },
     opacity: 0.6,
   };
+
+  nearItems: google.maps.LatLngLiteral[] = [];
+  nearItemsDataValues: any[] = [];
+  nearItemsIsAbstractData: any[] = [];
+  nearItemPositionsMarkerOption: google.maps.MarkerOptions = {
+    animation: google.maps.Animation.DROP,
+    opacity: 0.8,
+  };
+
+  organizationIsAbstractData: { string: any; } | null = null;
 
   constructor(
     private storage: Storage,
@@ -49,6 +61,7 @@ export class MapComponent implements OnInit {
         };
         this.isDisplay = true;
         this.zoom = 14;
+        this.getNearItems();
       } else {
         this.getUserLocation();
       }
@@ -63,17 +76,41 @@ export class MapComponent implements OnInit {
           lng: position.coords.longitude
         };
         this.isDisplay = true;
+        this.zoom = 14;
+        this.getNearItems();
       });
-      this.zoom = 14;
     }
   }
 
-  // moveMap(event: google.maps.MapMouseEvent | null) {
-  //   this.center = (event?.latLng?.toJSON());
-  // }
+  getNearItems = () => {
+    const path = `near_items?organization_id=nakano_test&latitude=${this.center.lat}&longitude=${this.center.lng}`;
+    const url = environment.apiEndpoint + path;
 
-  // move(event: google.maps.MapMouseEvent | null) {
-  //   this.display = event?.latLng?.toJSON();
-  // }
+    this.httpService.httpGet(url).subscribe({
+      next: (data) => {
+        console.log(data);
+        const items = data['items'];
+        this.organizationIsAbstractData = data['organization_is_abstract_data'];
+        console.log(items);
+        console.log(items[0].data_values["緯度"]);
+        items.forEach((item: any) => {
+          this.nearItems.push({
+            lat: item.data_values["緯度"],
+            lng: item.data_values["経度"],
+          });
+          this.nearItemsDataValues.push(item.data_values);
+          this.nearItemsIsAbstractData.push(item.is_abstract_data);
+        });
+        this.zoom = 16;
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    });
+  }
+
+  openInfoWindow(marker: MapMarker) {
+    this.infoWindow?.open(marker);
+  }
 
 }

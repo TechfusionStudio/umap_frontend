@@ -12,5 +12,25 @@
       [options]="currentPositionMarkerOption"
     >
     </map-marker>
+    <ng-container *ngFor="let nearItem of nearItems; let i = index;">
+      <map-marker
+        #marker="mapMarker"
+        [position]="nearItem"
+        [options]="nearItemPositionsMarkerOption"
+        (mapClick)="openInfoWindow(marker)"
+      ></map-marker>
+      <!-- <map-info-window>{{ nearItems[i]["data_values"]["公園名"] }}</map-info-window> -->
+      <map-info-window>
+        <!-- {{ nearItemsDataValues[i]["公園名"] }} -->
+        <!-- view all keys in nearItemsDataValues[i] -->
+        <ng-container *ngFor="let key of nearItemsDataValues[i] | keyvalue">
+          <div>{{ key.key }}: {{ key.value }}</div><br>
+        </ng-container>
+
+
+        <!-- <ion-button (click)="goToDetail(nearItemsDataValues[i])">詳細</ion-button> -->
+        <ion-button>詳細を見る</ion-button>
+      </map-info-window>
+    </ng-container>
   </google-map>
 </div>
