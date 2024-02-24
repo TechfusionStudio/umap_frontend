@@ -14,7 +14,10 @@ export class MapComponent implements OnInit {
   @ViewChild(MapInfoWindow) infoWindow: MapInfoWindow | undefined;
 
   userNickname: string = '';
-  center: google.maps.LatLngLiteral = {lat: 24, lng: 12};
+  center: google.maps.LatLngLiteral = {
+    lat: 35.707268,
+    lng: 139.663738,
+  };
   markerPositions: google.maps.LatLngLiteral[] = [];
   zoom = 4;
   display: google.maps.LatLngLiteral | undefined;
