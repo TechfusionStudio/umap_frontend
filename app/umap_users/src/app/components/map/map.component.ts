@@ -31,13 +31,12 @@ export class MapComponent implements OnInit {
 
   nearItems: google.maps.LatLngLiteral[] = [];
   nearItemsDataValues: any[] = [];
+  nearItemsDataKeys: string[] = [];
   nearItemsIsAbstractData: any[] = [];
   nearItemPositionsMarkerOption: google.maps.MarkerOptions = {
     animation: google.maps.Animation.DROP,
     opacity: 0.8,
   };
-
-  organizationIsAbstractData: { string: any; } | null = null;
 
   constructor(
     private storage: Storage,
@@ -90,17 +89,20 @@ export class MapComponent implements OnInit {
       next: (data) => {
         console.log(data);
         const items = data['items'];
-        this.organizationIsAbstractData = data['organization_is_abstract_data'];
-        console.log(items);
-        console.log(items[0].data_values["緯度"]);
+        const organizationIsAbstractData = data['organization_is_abstract_data'];
         items.forEach((item: any) => {
           this.nearItems.push({
             lat: item.data_values["緯度"],
             lng: item.data_values["経度"],
           });
           this.nearItemsDataValues.push(item.data_values);
-          this.nearItemsIsAbstractData.push(item.is_abstract_data);
+          if (item.is_abstract_data === null) {
+            this.nearItemsIsAbstractData.push(organizationIsAbstractData);
+          } else {
+            this.nearItemsIsAbstractData.push(item.is_abstract_data);
+          }
         });
+        this.nearItemsDataKeys = Object.keys(this.nearItemsDataValues[0]);
         this.zoom = 16;
       },
       error: (error) => {

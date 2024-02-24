@@ -1,7 +1,7 @@
 <div class="map-container" *ngIf="isDisplay">
   <google-map 
-    height="640px"
-    width="400px"
+    height="500px"
+    width="350px"
     [center]="center"
     [zoom]="zoom"
     [options]="options"
@@ -19,16 +19,12 @@
         [options]="nearItemPositionsMarkerOption"
         (mapClick)="openInfoWindow(marker)"
       ></map-marker>
-      <!-- <map-info-window>{{ nearItems[i]["data_values"]["公園名"] }}</map-info-window> -->
       <map-info-window>
-        <!-- {{ nearItemsDataValues[i]["公園名"] }} -->
-        <!-- view all keys in nearItemsDataValues[i] -->
-        <ng-container *ngFor="let key of nearItemsDataValues[i] | keyvalue">
-          <div>{{ key.key }}: {{ key.value }}</div><br>
+        <ng-container *ngFor="let key of nearItemsDataKeys">
+          <ng-container *ngIf="nearItemsIsAbstractData[i][key]">
+            <div>{{ key }}: {{ nearItemsDataValues[i][key] }}</div><br>
+          </ng-container>
         </ng-container>
-
-
-        <!-- <ion-button (click)="goToDetail(nearItemsDataValues[i])">詳細</ion-button> -->
         <ion-button>詳細を見る</ion-button>
       </map-info-window>
     </ng-container>
