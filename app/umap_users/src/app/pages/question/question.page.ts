@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { env } from 'process';
 import { HttpService } from 'src/app/services/http.service';
 import { environment } from 'src/environments/environment';
@@ -19,14 +19,18 @@ export class QuestionPage implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private httpService: HttpService,
+    private router: Router,
   ) {
     this.questionId = parseInt(this.activatedRoute.snapshot.paramMap.get('question_id') || '', undefined);
   }
 
   ngOnInit() {
-    this.getQuestionDetails();
   }
-
+  ionViewDidEnter() {
+    if (this.questionId) {
+      this.getQuestionDetails();
+    }
+  }
   getQuestionDetails() {
     const path: string = `question_prime/${this.questionId}`;
     const url: string = environment.apiEndpoint + path;
@@ -49,6 +53,9 @@ export class QuestionPage implements OnInit {
   formattedQuestionText = () => {
     return this.questionText.replace(/\n/g, '<br>');
   }
-  
 
+  // answer/:question_id に遷移する関数
+  goToAnswerPage = () => {
+    this.router.navigate([`/answer/${this.questionId}`]);
+  }
 }

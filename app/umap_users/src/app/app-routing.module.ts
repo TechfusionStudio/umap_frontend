@@ -39,6 +39,10 @@ const routes: Routes = [
   {
     path: 'question/edit/:item_id',
     loadChildren: () => import('./pages/question-edit/question-edit.module').then( m => m.QuestionEditPageModule)
+  },
+  {
+    path: 'answer/:question_id',
+    loadChildren: () => import('./pages/answer/answer.module').then( m => m.AnswerPageModule)
   }
 ];
 

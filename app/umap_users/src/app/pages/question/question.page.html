@@ -25,10 +25,15 @@
         <p>{{ answer["answer_text"] }}</p>
       </ion-label>
     </ion-item>
+
+    
     <ion-item *ngIf="noneAnswer">
       <ion-label>
         <p>回答はまだありません．．．</p>
       </ion-label>
     </ion-item>
   </ion-list>
+
+  <!-- 洗練されたデザインの回答ボタンを追加 -->
+  <ion-button class="ion-padding" expand="block" shape="round" (click)="goToAnswerPage()">回答する</ion-button>
 </ion-content>

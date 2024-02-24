@@ -22,11 +22,14 @@ export class ItemPage implements OnInit {
     private httpService: HttpService
   ) {
     this.itemId = this.activatedRoute.snapshot.paramMap.get('item_id');
-    this.indexQuestions();
   }
 
   ngOnInit() {
     this.init();
+  }
+
+  ionViewDidEnter() {
+    this.indexQuestions();
   }
 
   init = async () => {
