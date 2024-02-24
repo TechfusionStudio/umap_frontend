@@ -1,0 +1,32 @@
+/* フォーム全体のスタイリング */
+form {
+  padding: 16px;
+  ion-item {
+    --padding-start: 0; /* アイテムの左側のパディングを削除 */
+    --padding-end: 0; /* アイテムの右側のパディングを削除 */
+    --inner-padding-end: 8px; /* 入力フィールド内の右側のパディングを調整 */
+    margin-bottom: 20px; /* アイテム間のマージンを設定 */
+  }
+
+  /* ラベルのスタイリング */
+  ion-label {
+    font-size: 1.1rem; /* ラベルのフォントサイズを少し大きく */
+  }
+
+  /* テキストエリアのスタイリング */
+  ion-textarea {
+    --padding-start: 8px; /* テキストエリアの左側のパディングを調整 */
+    --padding-end: 8px; /* テキストエリアの右側のパディングを調整 */
+    --padding-top: 8px; /* テキストエリアの上側のパディングを調整 */
+    --padding-bottom: 8px; /* テキストエリアの下側のパディングを調整 */
+  }
+
+  /* 送信ボタンのスタイリング */
+  ion-button {
+    margin-top: 30px; /* ボタンの上側のマージンを設定 */
+    font-weight: bold; /* ボタンのテキストを太字に */
+    --background: var(--ion-color-primary); /* ボタンの背景色をプライマリカラーに設定 */
+    --background-activated: var(--ion-color-primary-tint); /* タップ時の背景色を少し明るく */
+    --background-hover: var(--ion-color-primary-shade); /* ホバー時の背景色を少し暗く */
+  }
+}

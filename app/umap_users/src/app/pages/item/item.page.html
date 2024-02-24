@@ -1,29 +1,42 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>公園の詳細情報</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
-  <div class="park-details">
+  <!-- 公園の詳細情報をカード形式で表示 -->
+  <ion-card class="park-details">
+    <ion-card-header>
+      <ion-card-title><strong>公園情報</strong></ion-card-title>
+    </ion-card-header>
+    <!-- <ion-card-content>
+      <ng-container *ngFor="let key of nearItemsDataKeys">
+        <h2><strong>{{ key }}</strong></h2>
+        <p>{{ nearItemsDataValues[key] }}</p>
+      </ng-container>
+    </ion-card-content> -->
+    <!-- ion-list で表現 -->
     <ng-container *ngFor="let key of nearItemsDataKeys">
-      <p><strong>{{ key }}:</strong> {{ nearItemsDataValues[key] }}</p>
-      <!-- <br> -->
+      <ion-list>
+        <ion-card-content>
+          <ion-item>
+            <ion-label>
+              <h2><strong>{{ key }}</strong></h2>
+              <p>{{ nearItemsDataValues[key] }}</p>
+            </ion-label>
+          </ion-item>
+        </ion-card-content>
+      </ion-list>
     </ng-container>
+  </ion-card>
+
+  <div class="question-container">
+    <!-- 質問を投稿するボタン -->
+    <ion-button expand="block" routerLink="/question/edit/{{nearItemsDataValues['item_id']}}">質問を投稿する</ion-button>
+
+    <!-- 質問一覧を**表示** -->
+    <ion-list>
+      <ion-item *ngFor="let question of questions" routerLink="/question/{{question['question_id']}}">
+        <ion-label>
+          <p><strong>質問：</strong>{{ question["question_title"] }}</p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
   </div>
-
-
-  <!-- 質問一覧を**表示** -->
-  <!-- <ion-list>
-    <ion-item *ngFor="let question of questions">
-      <ion-label>
-        <h2>{{ question.title }}</h2>
-        <p>{{ question.content }}</p>
-      </ion-label>
-    </ion-item>
-  </ion-list> -->
-  <!-- 質問を**発行** -->
-  <ion-button expand="block" routerLink="/question/edit/{{nearItemsDataValues['item_id']}}">質問を投稿する</ion-button>
-  
-
 </ion-content>
+

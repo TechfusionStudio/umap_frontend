@@ -1,0 +1,42 @@
+ion-card-content {
+  span {
+    white-space: pre-wrap; /* 改行と空白を保持 */
+  }
+}
+
+ion-card {
+  margin: 40px 16px;
+  // ion-card-header {
+  //   --background: #f0f0f5;
+  // }
+  ion-card-title {
+    font-size: 1.2em;
+    color: #333;
+  }
+}
+
+ion-list {
+  margin: 16px;
+  ion-list-header {
+    font-weight: bold;
+    // --background: #f0f0f5;
+  }
+  ion-item {
+    // --background: #fff;
+    // --border-color: #ddd;
+    // --border-width: 0.5px;
+    // --border-style: solid;
+    --padding-start: 16px;
+    --inner-padding-end: 16px;
+    --padding-end: 16px;
+    --min-height: 0;
+    ion-label h2 {
+      font-size: 1em;
+      color: #666;
+    }
+    ion-label p {
+      font-size: 0.9em;
+      margin: 8px 0;
+    }
+  }
+}
